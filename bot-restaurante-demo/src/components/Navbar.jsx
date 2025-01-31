@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { supabase } from "../lib/supabaseClient";
 
-const Navbar = ({ handleLogout }) => {
+const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
@@ -25,7 +26,13 @@ const Navbar = ({ handleLogout }) => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const handleLogoutClick = () => {
+  const handleLogoutClick = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error("Error al cerrar sesión:", error);
+      return;
+    }
+
     navigate("/login");
   };
 

@@ -3,10 +3,13 @@ import { supabase } from "../lib/supabaseClient";
 import Navbar from "../components/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMotorcycle, faUtensils } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   // 🔄 Obtener órdenes pendientes desde Supabase
   const fetchOrders = async () => {
@@ -22,12 +25,39 @@ const Orders = () => {
 
       setOrders(data);
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   useEffect(() => {
-    fetchOrders(); // Cargar las órdenes al iniciar
+    async function getUser() {
+      const user = await supabase.auth.getUser();
+      console.log('dentro de ordenes pendientes');
+      
+      console.log(user);
+      
+      if (!user.data.user) {
+        navigate("/login");
+      }
+    }
+    getUser();
+    
+  }, [navigate]);
 
+  useEffect(() => {
+    async function getUser() {
+      const user = await supabase.auth.getUser();
+      if (!user) {
+        navigate("/login");
+      }
+    }
+    getUser();
+    
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchOrders(); // Cargar las órdenes al iniciar
+    
+    
     // 🔔 Suscripción en tiempo real
     const channel = supabase
       .channel("ordenesPendientes-updates")
@@ -144,7 +174,7 @@ const Orders = () => {
                 .map(order => (
                   <div
                     key={order.id}
-                    className="p-4 rounded shadow-md flex flex-col justify-between bg-gray-100 dark:bg-gray-800 dark:border dark:border-4 dark:border-gray-700 dark:text-white"
+                    className="p-4 rounded shadow-md flex flex-col border-blue-500 justify-between border-solid border-2 bg-gray-100 dark:bg-gray-800 dark:border-4 dark:border-gray-700 dark:text-white"
                   >
                     <div className="flex items-center space-x-4 mb-4">
                       {/* Ícono según el tipo de pedido */}

@@ -1,40 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient"; // Importa tu instancia de Supabase desde donde la configuraste
-import { useEffect } from "react";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function getUser() {
-      const user = await supabase.auth.getUser();
-      console.log('dentro del login');
-      
-      console.log(user);
-      
-      if (!user.data.user) {
-        navigate("/login");
-      }
-    }
-    getUser();
-    
-  }, [navigate]);
-
-  useEffect(() => {
-
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate("/login");
-      } else {
-        navigate("/orders");
-      }
-
-    });
-  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,7 +17,7 @@ const Login = () => {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: username,
         password: password,
-      })
+      });
 
       if (error) {
         // Si ocurre un error, mostrarlo
@@ -54,12 +26,10 @@ const Login = () => {
       }
 
       if (data.session) {
-        console.log("Sesión creada:", data.session);
-
-        // Si la sesión se creó correctamente, redirigir a la página de órdenes
+        
         navigate("/orders");
       } else {
-        setError("Usuario o contraseña incorrectos.");
+        setError("Error inesperado, por favor intenta de nuevo.");
       }
     } catch (err) {
       console.error("Error general:", err);
@@ -110,5 +80,3 @@ const Login = () => {
 };
 
 export default Login;
-
-

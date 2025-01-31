@@ -1,12 +1,31 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const CompletedOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function getUser() {
+      const user = await supabase.auth.getUser();
+      console.log('dentro de ordenes completadas');
+      
+      console.log(user.data.user);
+      
+      if (!user.data.user) {
+        navigate("/login");
+      }
+    }
+    getUser();
+    
+  }, [navigate]);
+
   const fetchCompletedOrders = async () => {
+
     const { data, error } = await supabase
       .from("ordenesCompletadas")
       .select("*");
@@ -18,6 +37,8 @@ const CompletedOrders = () => {
     }
     setLoading(false);
   };
+
+  
 
   useEffect(() => {
     fetchCompletedOrders();
