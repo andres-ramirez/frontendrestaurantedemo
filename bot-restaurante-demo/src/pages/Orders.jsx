@@ -204,12 +204,16 @@ const Orders = () => {
                           <strong>MEDIO DE PAGO:</strong>
                           <span className="pl-2">{order.medioDePago}</span>
                         </p>
-                        {order.direccion !== 'mesa' && (
+                        {order.entrega === 'domicilio' && (
                           <p>
                             <strong>DOMICILIO:</strong>
                             <span className="pl-2">{order.direccion}</span>
                           </p>
                         )}
+                        <p>
+                          <strong>VALOR:</strong>
+                          <span className="pl-2">{order.valor}</span>
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-col space-y-2 mt-auto">

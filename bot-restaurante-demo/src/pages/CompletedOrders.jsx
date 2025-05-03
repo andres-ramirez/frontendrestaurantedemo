@@ -79,7 +79,7 @@ const CompletedOrders = () => {
                       Estado: {order.estado}
                     </p>
                   )}
-                  {order.direccion && (
+                  {order.entrega === 'domicilio' && (
                     <p><strong>Domicilio:</strong> {order.direccion}</p>
                   )}
                 </div>
