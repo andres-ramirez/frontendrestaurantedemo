@@ -9,8 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "pnpm run build",
-    "deploy": "gh-pages -d dist"
+    "build": "vite build && cp dist/index.html dist/404.html",
+    "deploy": "pnpm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",

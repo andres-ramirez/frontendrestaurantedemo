@@ -16,7 +16,7 @@ const Orders = () => {
     const { data, error } = await supabase
       .from("ordenesPendientes")
       .select("*")
-      .eq("estado", "activa");
+      .eq("estado", "preparando");
 
     if (error) {
       console.error("Error al obtener órdenes:", error);
