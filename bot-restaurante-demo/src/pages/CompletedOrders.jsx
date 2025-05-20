@@ -36,9 +36,7 @@ const CompletedOrders = () => {
       setOrders(data);
     }
     setLoading(false);
-  };
-
-  
+  };  
 
   useEffect(() => {
     fetchCompletedOrders();
