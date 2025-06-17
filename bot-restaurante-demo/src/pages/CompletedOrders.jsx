@@ -55,7 +55,7 @@ const CompletedOrders = () => {
       // setUserId(usuarioData.id);
 
       const { data: ordenes, error } = await supabase
-        .from("ordenesCompletadas")
+        .from("ordenes_completadas")
         .select("*")
         .eq("usuario_id", usuarioData.id)
         .order("fecha_creacion", { ascending: false });

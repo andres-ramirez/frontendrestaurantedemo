@@ -12,11 +12,11 @@ const Orders = () => {
 
   const fetchOrders = async (usuarioId) => {
     const { data, error } = await supabase
-      .from("ordenesPendientes")
+      .from("ordenes_pendientes")
       .select("*")
       .eq("estado", "preparando")
       .eq("usuario_id", usuarioId)
-      .order("numeroDePedido", { ascending: false });
+      .order("numero_pedido", { ascending: false });
 
     if (error) {
       console.error("Error al obtener órdenes:", error);
@@ -56,13 +56,13 @@ const Orders = () => {
     if (!userId) return;
 
     const channel = supabase
-      .channel("ordenesPendientes-updates")
+      .channel("ordenes_pendientes-updates")
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
-          table: "ordenesPendientes",
+          table: "ordenes_pendientes",
         },
         (payload) => {
           console.log("📢 Cambio detectado:", payload);
@@ -96,7 +96,7 @@ const Orders = () => {
     if (!order) return;
 
     const { error: insertError } = await supabase
-      .from("ordenesCompletadas")
+      .from("ordenes_completadas")
       .insert([{ ...order, estado: "completado", usuario_id: order.usuario_id }]);
 
     if (insertError) {
@@ -105,7 +105,7 @@ const Orders = () => {
     }
 
     const { error: deleteError } = await supabase
-      .from("ordenesPendientes")
+      .from("ordenes_pendientes")
       .delete()
       .eq("id", id);
 
@@ -122,7 +122,7 @@ const Orders = () => {
     if (!order) return;
 
     const { error: insertError } = await supabase
-      .from("ordenesCompletadas")
+      .from("ordenes_completadas")
       .insert([{ ...order, estado: "cancelado", usuario_id: order.usuario_id }]);
 
     if (insertError) {
@@ -131,7 +131,7 @@ const Orders = () => {
     }
 
     const { error: deleteError } = await supabase
-      .from("ordenesPendientes")
+      .from("ordenes_pendientes")
       .delete()
       .eq("id", id);
 
