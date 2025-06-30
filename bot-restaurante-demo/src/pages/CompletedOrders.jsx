@@ -160,12 +160,12 @@ const CompletedOrders = () => {
                 }`}
               >
                 <div>
-                  <p className="font-bold text-lg">Pedido #{order.numeroDePedido}</p>
+                  <p className="font-bold text-lg">Pedido #{order.numero_pedido}</p>
                   <p><strong>Fecha:</strong> {parseLocalDate(order.fecha).toLocaleDateString()}</p>
                   <p><strong>Cliente:</strong> {order.cliente}</p>
                   <p><strong>Orden:</strong> {order.producto}</p>
                   <p><strong>Entrega:</strong> {order.entrega}</p>
-                  <p><strong>Medio de pago:</strong> {order.medioDePago}</p>
+                  <p><strong>Medio de pago:</strong> {order.medio_pago}</p>
                   <p>
                     <strong>Valor:</strong>{" "}
                     {Number(order.valor).toLocaleString("es-CO", {

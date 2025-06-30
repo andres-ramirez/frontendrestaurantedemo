@@ -174,7 +174,7 @@ const Orders = () => {
                     <div>
                       <p>
                         <strong>NÚMERO PEDIDO:</strong>
-                        <span className="pl-2">{order.numeroDePedido}</span>
+                        <span className="pl-2">{order.numero_pedido}</span>
                       </p>
                       <p>
                         <strong>CLIENTE:</strong>
@@ -190,7 +190,7 @@ const Orders = () => {
                       </p>
                       <p>
                         <strong>MEDIO DE PAGO:</strong>
-                        <span className="pl-2">{order.medioDePago}</span>
+                        <span className="pl-2">{order.medio_pago}</span>
                       </p>
                       {order.entrega === "domicilio" && (
                         <p>
